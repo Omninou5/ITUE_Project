@@ -1,0 +1,200 @@
+﻿@model ITUE.Models.Material
+
+@using ITUE.Models
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Account_Layout.cshtml";
+}
+
+<main class="container">
+
+    <nav class="mt-3" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/Author/Index">Личный кабинет</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Добавление публикации</li>
+        </ol>
+    </nav>
+
+    <br />
+    <h2>Добавление публикации</h2>
+    <hr />
+
+    @using (Html.BeginForm("Create", "Author", FormMethod.Post, new { enctype = "multipart/form-data", @class = "mt-4 was-validated" }))
+    {
+        @Html.LabelFor(m => m.TitleRus, "Название публикации на русском языке")
+        @Html.TextAreaFor(m => m.TitleRus, new { @class = "form-control is-invalid mb-3", required = "" })
+
+        @Html.LabelFor(m => m.TitleEng, "Название публикации на английском языке")
+        @Html.TextAreaFor(m => m.TitleEng, new { @class = "form-control is-invalid mb-3", required = "" })
+
+        <div class="row mb-3">
+            <div class="form-group col-md-4">
+                @Html.LabelFor(m => m.Type, "Тип публикации")
+                @Html.DropDownListFor(m => m.Type, new List<SelectListItem>() {
+               new SelectListItem { Text = "Выберите ...", Value = ""},
+               new SelectListItem { Text = "Научная статья", Value = "Научная статья"},
+               new SelectListItem { Text = "Материалы конференции", Value = "Материалы конференции"},
+               new SelectListItem { Text = "Научный обзор", Value = "Научный обзор"}},
+            new { @class = "custom-select"})
+            </div>
+
+            <div class="form-group col-md-6">
+                @Html.LabelFor(m => m.Rubric, "Рубрика публикации")
+                @Html.DropDownListFor(m => m.Rubric, new List<SelectListItem>() {
+               new SelectListItem { Text = "Выберите ...", Value = ""},
+               new SelectListItem { Text = "Приборостроение, метрология и информационно-измерительные приборы и системы", Value = "Приборостроение, метрология и информационно-измерительные приборы и системы"},
+               new SelectListItem { Text = "Информатика, вычислительная техника и управление", Value = "Информатика, вычислительная техника и управление"},
+               new SelectListItem { Text = "Документальная информация", Value = "Документальная информация"},
+               new SelectListItem { Text = "Экономические науки", Value = "Экономические науки"}},
+            new { @class = "custom-select", required = "" })
+            </div>
+
+            <div class="form-group col-md-2">
+                @Html.LabelFor(m => m.Pages, "Количество страниц")
+                <input type="number" name="Pages" min="1" placeholder="Страницы" class="form-control is-invalid mb-3" />
+            </div>
+        </div>
+        <hr />
+
+
+        // Добавление сведений об авторах
+        <h5><u>Сведения об авторах</u></h5>
+        <div class="mb-5">
+            <div class="row mb-3">
+                <div class="col-md-4">
+                    @Html.Label("Authors[0].Surname", "Фамилия")
+                    @Html.TextBox("Authors[0].Surname", null, new { @class = "form-control is-invalid", required = "" })
+                </div>
+                <div class="col-md-4">
+                    @Html.Label("Authors[0].Name", "Имя")
+                    @Html.TextBox("Authors[0].Name", null, new { @class = "form-control is-invalid", required = "" })
+                </div>
+                <div class="col-md-4">
+                    @Html.Label("Authors[0].Patronymic", "Отчество")
+                    @Html.TextBox("Authors[0].Patronymic", null, new { @class = "form-control is-invalid", required = "" })
+                </div>
+            </div>
+
+            <div class="mb-2">
+                @Html.Label("Authors[0].Place", "Место работы/учебы автора")
+                @Html.TextBox("Authors[0].Place", null, new { @class = "form-control is-invalid", required = "" })
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    @Html.Label("Authors[0].Position", "Должность/Статус")
+                    @Html.TextBox("Authors[0].Position", null, new { @class = "form-control is-invalid", required = "" })
+                </div>
+                <div class="col-md-6">
+                    @Html.Label("Authors[0].Email", "Адрес электронной почты")
+                    @Html.TextBox("Authors[0].Email", null, new { @class = "form-control is-invalid", required = "" })
+                </div>
+            </div>
+        </div>
+        <hr />
+
+        // Добавить еще автора
+        <div class="Field">
+            <input class="btn btn-success" type="button" value="Добавить автора" id="added" />
+        </div>
+        <br />
+        <hr />
+
+
+        <!-- Добавление Аннотаций -->
+        <div class="mb-3">
+            @Html.LabelFor(m => m.AnnotationRus, "Аннотация на русском языке")
+            @Html.TextAreaFor(m => m.AnnotationRus, new { @class = "form-control is-invalid mb-3", required = "" })
+        </div>
+        <div class="mb-3">
+            @Html.LabelFor(m => m.AnnotationEng, "Аннотация на английском языке")
+            @Html.TextAreaFor(m => m.AnnotationEng, new { @class = "form-control is-invalid mb-3", required = "" })
+        </div>
+
+        <!-- Добавление Ключевых Слов -->
+        <div class="mb-3">
+            @Html.LabelFor(m => m.KeywordsRus, "Ключевые слова через запятую на русском языке")
+            @Html.TextAreaFor(m => m.KeywordsRus, new { @class = "form-control is-invalid mb-3", required = "" })
+        </div>
+        <div class="mb-5">
+            @Html.LabelFor(m => m.KeywordsEng, "Ключевые слова через запятую на английском язык")
+            @Html.TextAreaFor(m => m.KeywordsEng, new { @class = "form-control is-invalid mb-3", required = "" })
+        </div>
+
+        <div class="row mx-1 mb-5 justify-content-between align-items-end">
+            <input class="btn btn-info" type="file" name="upload" required />
+            <input class="btn btn-primary" type="submit" value="Отправить публикацию" />
+        </div>
+    }
+</main>
+
+<script>
+    // Добавление автора
+    $(function () {
+        var i = 0;
+        $("#added").click(function () {
+            i++;
+            let div = document.createElement('div');
+            div.className = "author_pole mb-5";
+            div.innerHTML = "<b>Автор № " + (i + 1) + "</b>" +
+                "<div class='row mb-3'>" +
+                "<div class='col-md-4'>" +
+                "<label>Фамилия</label>" +
+                "<input class='form-control is-invalid AuthorsSurname' name='Authors[" + i + "].Surname' required='' type='text' value=''>" +
+                "</div>" +
+                "<div class='col-md-4'>" +
+                "<label>Имя</label>" +
+                "<input class='form-control is-invalid AuthorsName' name='Authors[" + i + "].Name' required='' type='text' value=''>" +
+                "</div>" +
+                "<div class='col-md-4'>" +
+                "<label>Отчество</label>" +
+                "<input class='form-control is-invalid AuthorsPatronymic' name='Authors[" + i + "].Patronymic' required='' type='text' value=''>" +
+                "</div>" +
+                "</div>" +
+
+                "<div class='mb-2'>" +
+                "<label>Место работы/учебы автора</label>" +
+                "<input class='form-control is-invalid AuthorsPlace' name='Authors[" + i + "].Place' required='' type='text' value=''>" +
+                "</div>" +
+
+                "<div class='row mb-3'>" +
+                "<div class='col-md-6'>" +
+                "<label>Должность/Статус</label>" +
+                "<input class='form-control is-invalid AuthorsPosition' name='Authors[" + i + "].Position' required='' type='text' value=''>" +
+                "</div>" +
+
+                "<div class='col-md-6'>" +
+                "<label>Адрес электронной почты</label>" +
+                "<input class='form-control is-invalid AuthorsEmail' name='Authors[" + i + "].Email' required='' type='text' value=''>" +
+                "</div>" +
+                "</div>" +
+                "<input class='btn btn-danger' type='button' value='Удалить автора' onclick='removeField(this)'><hr>";
+            $(div).insertBefore("#added");
+            Update();
+        })
+    })
+
+    // Функция удаления автора
+    function removeField(btn) {
+        var div = btn.closest(".author_pole");
+        if (div) {
+            div.remove();
+            Update();
+        }
+    }
+
+    // Функция обновления значения Name в Input(Author)
+    function Update() {
+        // Подсчет количества input с одинаковыми классами
+        var kol = document.getElementsByClassName('AuthorsSurname').length;
+        for (var i = 0; i < kol; i++) {
+            document.getElementsByClassName('AuthorsSurname')[i].setAttribute('name', 'Authors[' + (i + 1) + '].Surname')
+            document.getElementsByClassName('AuthorsName')[i].setAttribute('name', 'Authors[' + (i + 1) + '].Name')
+            document.getElementsByClassName('AuthorsPatronymic')[i].setAttribute('name', 'Authors[' + (i + 1) + '].Patronymic')
+            document.getElementsByClassName('AuthorsPlace')[i].setAttribute('name', 'Authors[' + (i + 1) + '].Place')
+            document.getElementsByClassName('AuthorsPosition')[i].setAttribute('name', 'Authors[' + (i + 1) + '].Position')
+            document.getElementsByClassName('AuthorsEmail')[i].setAttribute('name', 'Authors[' + (i + 1) + '].Email')
+        }
+    }
+</script>

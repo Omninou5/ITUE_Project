@@ -1,0 +1,120 @@
+﻿@model ITUE.Models.Material
+
+@using ITUE.Models
+
+@{
+    ViewBag.Title = "Publication";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<main class="container">
+    <nav class="mt-3" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/Home/Index">Главная</a></li>
+            <li class="breadcrumb-item"><a href="/Issue/Index">Архив номеров</a></li>
+            <li class="breadcrumb-item"><a href="/Issue/Issue/@Model.IssueId">Номер выпуска</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@Model.TitleRus</li>
+        </ol>
+    </nav>
+
+    <div class="row">
+        <div class="col-md-8">
+            <h3 class="mt-2">@Html.DisplayFor(m => m.TitleRus)</h3>
+            @foreach (Author A in Model.Authors)
+            {
+                <p class="text-muted mb-1">@A.Surname @A.Name @A.Patronymic</p>
+            }
+            <div class="mt-4">
+                <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link active" id="nav-annotation-tab" data-toggle="tab" href="#nav-annotation" role="tab" aria-controls="nav-annotation" aria-selected="true">Аннотация</a>
+                        <a class="nav-item nav-link" id="nav-author-tab" data-toggle="tab" href="#nav-author" role="tab" aria-controls="nav-author" aria-selected="false">Об авторах</a>
+                        <a class="nav-item nav-link" id="nav-keywords-tab" data-toggle="tab" href="#nav-keywords" role="tab" aria-controls="nav-keywords" aria-selected="false">Ключевые слова</a>
+                    </div>
+                </nav>
+
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active mt-3" id="nav-annotation" role="tabpanel" aria-labelledby="nav-annotation-tab">
+                        <p>@Html.DisplayFor(m => m.AnnotationRus)</p>
+                        <hr />
+                    </div>
+                    <div class="tab-pane fade mt-3" id="nav-author" role="tabpanel" aria-labelledby="nav-author-tab">
+                        @foreach (Author A in Model.Authors)
+                        {
+                            <p>@A.Surname @A.Name @A.Patronymic</p>
+                            <p><b>Место работы/учебы: </b>@A.Place</p>
+                            <p><b>Должность/стутус: </b>@A.Position</p>
+                            <p><b>E-mail: </b><a href="mailto:@A.Email">@A.Email</a></p>
+                            <hr />
+                        }
+                    </div>
+                    <div class="tab-pane fade mt-3" id="nav-keywords" role="tabpanel" aria-labelledby="nav-keywords-tab">
+                        <!-- Разделение строки из ключевых слов на отдельные слова -->
+                        @{
+                            var TEST = Model.KeywordsRus.Split(',');
+                        }
+                        @foreach (var s in TEST)
+                        {
+                            using (Html.BeginForm("Search", "Home", FormMethod.Post, new { @class = "" }))
+                            {
+                                <input class="" type="search" name="search" value="@s" hidden="hidden" />
+                                <input class="page-link" type="submit" value="@s" />
+                            }
+
+                        }
+                        <hr />
+                    </div>
+                </div>
+            </div>
+            <br />
+
+            <!-- Документ во фрейме -->
+            @{
+                if (File.Exists(Server.MapPath("~/Files/Articles/") + Model.Id + "/" + Model.FileName))
+                {
+
+                    <iframe class="w-100" src="/Files/Articles/@Model.Id/@Model.FileName" height="780"></iframe>
+                }
+                else
+                {
+                    <p class="alert-warning">Файл публикации не найден!</p>
+                }
+            }
+
+            <br />
+        </div>
+
+        <div class="col-md-4">
+            <h5 class="mt-2 mb-3">Информация о статье</h5>
+            <hr />
+
+            <h5 class="mt-2">Дата публикации</h5>
+            <p>@Model.DatePublication.Value.ToLongDateString()</p>
+
+            <h5 class="mt-2">Тип публикации</h5>
+            <p>@Html.DisplayFor(m => m.Type)</p>
+
+            <h5 class="mt-2">Рубрика публикации</h5>
+            <p>@Html.DisplayFor(m => m.Rubric)</p>
+
+            <h5 class="mt-2">Количество страниц</h5>
+            <p>@Html.DisplayFor(m => m.Pages)</p>
+
+            @{
+                if (File.Exists(Server.MapPath("~/Files/Articles/") + Model.Id + "/" + Model.FileName))
+                {
+                    <div>
+                        <a class="btn btn-info" href="/Materials/GetFile/@Model.Id">Скачать файл статьи</a>
+                    </div>
+                }
+                else
+                {
+                    <p class="alert-warning">Файл публикации не найден!</p>
+                }
+            }
+
+        </div>
+
+    </div>
+</main>
+

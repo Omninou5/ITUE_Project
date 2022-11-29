@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header сайта -->
+        <div class="flex-nowrap justify-content-between align-items-center py-5" style="background: url(/Content/file/image/logo2.gif) no-repeat 0% 50%;">
+            <form class="form-inline justify-content-end">
+                <input class="form-control mr-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success mr-4" type="submit">Search</button>
+            </form>
+        </div>
+
+
+        <!-- Навигационная панель -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-info">
+
+            <a class="navbar-brand" href="/Home/Index">ITUE</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item ">
+                        <a class="nav-link active" href="/Home/About">О журнале</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Home/Author">Для авторов</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Архив номеров
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="/Home/Year2020">2020 год</a>
+                            <a class="dropdown-item" href="/Home/Year2019">2019 год</a>
+                            <a class="dropdown-item" href="/Home/Year2018">2018 год</a>
+                            <a class="dropdown-item" href="/Home/Year2017">2017 год</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Home/Editorial">Редколлегия</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Home/Actual">Актуальный выпуск</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Home/Contact">Контакты</a>
+                    </li>
+                </ul>
+
+                <a class="btn btn-sm btn-outline-secondary" href="#">Sign up</a>
+            </div>
+        </nav>
+    </div>
+
+
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Информационные технологии в управлении и экономике</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

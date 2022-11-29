@@ -1,0 +1,23 @@
+﻿@model IEnumerable<ITUE.Models.Material>
+
+@using ITUE.Models
+
+@foreach (Material item in Model)
+{
+    <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+        <div class="col p-4 d-flex flex-column position-static">
+            <h3 class="mb-1">@Html.DisplayFor(modelItem => item.TitleRus)</h3>
+            <h5 class="mb-2 text-secondary">
+                @foreach (var A in item.Authors)
+                {
+                    @(A.Surname + " ") @(A.Name[0] + ".") @(A.Patronymic[0] + "., ")
+                }
+            </h5>
+            <div class="mb-3 text-muted">@item.DatePublication.Value.ToString("D")</div>
+            <p class="mb-auto">@Html.DisplayFor(modelItem => item.AnnotationRus)</p>
+
+
+            @Html.ActionLink("Продолжить чтение", "Article", new { id = item.Id })
+        </div>
+    </div>
+}

@@ -1,0 +1,55 @@
+﻿@model IEnumerable<ITUE.Models.Issue>
+
+@{
+    ViewBag.Title = "Главная страница";
+}
+
+<main class="container">
+    <!-- Карусель фото  -->
+    <div class="row">
+        <!-- Новости -->
+        @Html.Action("MainNews", "News")
+
+        <!-- Блок слева карусели -->
+        <div class="col-md-4">
+            <div class="p-4 mt-3 bg-light rounded">
+                <h4 class="font-italic">О журнале</h4>
+                <p class="mb-0">
+                    Журнал создан для публикации научно-исследовательских работ,
+                    открывающих пути развития стратегических информационных технологий,
+                    включая вопросы создания суперкомпьютеров и разработки программного обеспечения.
+                </p>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Главное тело -->
+    <div class="row mt-4">
+        <!-- Статьи -->
+        <div class="col-md-8">
+            <h3 class="pb-4 mb-4 font-italic border-bottom"> Новое в журнале </h3>
+
+            <!-- Статьи на главном экране -->
+            @Html.Action("MainPublished", "Issue")
+        </div>
+
+        <!-- Правая панель -->
+        <aside class="col-md-4">
+            <div class="p-4">
+                <h4 class="font-italic">Архивы</h4>
+                <hr />
+                <ol class="list-unstyled mb-0">
+                    @foreach (var issues in Model.GroupBy(m => m.Year))
+                    {
+                        foreach (var issue in issues)
+                        {
+                            <li><a href="/Issue/Issue/@issue.Id"> @issues.Key - № @issue.Number</a></li>
+                        }
+                    }
+                </ol>
+            </div>
+        </aside>
+    </div>
+
+</main>

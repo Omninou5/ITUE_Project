@@ -1,0 +1,27 @@
+﻿@model ITUE.Models.News
+
+
+@{
+    ViewBag.Title = "ChangeStatus";
+    Layout = "~/Views/Shared/_Account_Layout.cshtml";
+}
+
+<br />
+<br />
+<big><b>Изменить статус данной новости?</b></big>
+<div class="row no-gutters border rounded overflow-hidden flex-md-row my-4 shadow-sm h-md-250 position-relative">
+    <div class="col p-4 d-flex flex-column position-static">
+        <h5 class="mb-3">
+            @Html.DisplayFor(m => m.TitleRus)
+        </h5>
+        <h6 class="mb-2 text-secondary">
+            @Html.DisplayFor(m => m.TextRus)
+        </h6>
+    </div>
+</div>
+
+@using (Html.BeginForm())
+{
+    <a class="btn btn-danger" href="/News/Index">Отменить</a>
+    <input class="btn btn-success" type="submit" value="Применить" />
+}

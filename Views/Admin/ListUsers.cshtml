@@ -1,0 +1,69 @@
+﻿@model IEnumerable<ITUE.Models.ApplicationUser>
+
+@{
+    ViewBag.Title = "ListUsers";
+    Layout = "~/Views/Shared/_Account_Layout.cshtml";
+}
+
+@if (Model.Count() == 0)
+{
+    <h4 class="my-5 text-center">Принятых к публикации материалов нет</h4>
+    <a href="/Materials/Index" class="btn btn-info">Вернуться назад</a>
+}
+else
+{
+    <table class="table table-hover table-sm mt-4 shadow-sm rounded" width="100%">
+        <thead class="thead-light">
+            <tr>
+                <th width="15%">Id Пользователя</th>
+                <th width="30%">Email</th>
+                <th width="10%">Роль пользователя</th>
+                <th width="15%"></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @item.Id
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @foreach (var role in item.Roles)
+                        {
+                            switch (role.RoleId)
+                            {
+                                case "0":
+                                    <span class="badge badge-danger w-100" title="Администратор">Администратор</span>
+                                    break;
+                                case "1":
+                                    <span class="badge badge-primary w-100" title="Пользователь">Пользователь</span>
+                                    break;
+                                case "2":
+                                    <span class="badge btn-success w-100" title="Главный редактор">Главный редактор</span>
+                                    break;
+                                case "3":
+                                    <span class="badge badge-info w-100" title="Технический редактор">Технический редактор</span>
+                                    break;
+                                case "4":
+                                    <span class="badge btn-warning w-100" title="Рецензент">Рецензент</span>
+                                    break;
+                                default:
+                                    <span class="badge badge-dark w-100">Неизвестная роль</span>
+                                    break;
+                            }
+                        }
+                    </td>
+                    <td class="border-left">
+                        @Html.ActionLink("Редактировать пользователя", "Edit", new { id = item.Id }, null) <br />
+                        @Html.ActionLink("Удалить учетную запись", "Delete", new { id = item.Id }, null)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

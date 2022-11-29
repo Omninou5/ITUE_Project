@@ -1,0 +1,59 @@
+﻿@model IEnumerable<ITUE.Models.Material>
+
+
+@{
+    ViewBag.Title = "Поиск";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    int i = 0;
+}
+
+<h3 class="mt-3">Результаты поиска</h3>
+
+@if (Model.Count() == 0)
+{
+    <h4>Ничего не найдено</h4>
+}
+else
+{
+    <hr />
+    <br />
+    <dl class="row">
+        @foreach (var item in Model)
+        {
+        <dd class="col-12 col-md-10">
+            <a class="text-uppercase" href="/Issue/Article/@item.Id">
+                <b>@Html.DisplayFor(modelItem => item.TitleRus)</b>
+            </a>
+
+            <br />
+            <i>
+                @foreach (var A in item.Authors)
+                {
+                    @(A.Surname + " ") @(A.Name[0] + ".") @(A.Patronymic[0] + ". | ")
+                }
+            </i>
+            <br />
+            <div class="mt-2">
+                <p class="text-muted"> (@Html.DisplayFor(modelItem => item.KeywordsRus)) </p>
+            </div>
+            <p>
+                <a class="btn-sm btn-info" data-toggle="collapse" href="#annotation@(i)" role="button" aria-expanded="false" aria-controls="annotation@(i)">
+                    Аннотация
+                </a>
+            </p>
+            <div class="collapse" id="annotation@(i)">
+                <div class="card card-body">
+                    @item.AnnotationRus
+                </div>
+            </div>
+            @{
+                i++;
+            }
+            <hr />
+        </dd>
+        }
+    </dl>
+}
+
+

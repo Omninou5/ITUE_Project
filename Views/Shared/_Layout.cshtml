@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - ITUE</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header сайта -->
+        <div class="row justify-content-between no-gutters d-flex align-items-center">
+            <div class="col-md-9 py-4">
+                <a href="/Home/Index">
+                    <img style="max-width:100%" src="/Files/Site/image/logo2.gif" alt="header">
+                </a>
+            </div>
+            <div class="col-md-3 pb-2">
+                @using (Html.BeginForm("Search", "Home", FormMethod.Post, new { @class = "form-inline justify-content-end" }))
+                {
+                    <input class="form-control col w-100" type="search" name="search" required placeholder="Введите запрос" />
+                    <input class="btn btn-outline-success" type="submit" value="Поиск" />
+                }
+            </div>
+        </div>
+
+        <!-- Навигационная панель -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-info">
+
+            <a class="navbar-brand" href="/Home/Index">ITUE</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item ">
+                        <a class="nav-link active text-light" href="/Home/About">О журнале</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="/Home/Author">Для авторов</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link text-light" href="/Issue/Index">Архив номеров</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="/Home/Editorial">Редколлегия</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="/Issue/Actual">Актуальный выпуск</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="/Home/Contact">Контакты</a>
+                    </li>
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </nav>
+    </div>
+
+
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <div class="d-flex justify-content-between">
+                <div><p>&copy; @DateTime.Now.Year - Информационные технологии в управлении и экономике</p></div>
+                <div><img style="max-width:40%" src="/Files/Site/image/Age.jpg" alt="header"></div>
+            </div>
+            
+
+
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

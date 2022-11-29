@@ -1,0 +1,67 @@
+﻿@model ITUE.Models.Material
+
+@using ITUE.Models
+
+@{
+    ViewBag.Title = "DetailsReview";
+    Layout = "~/Views/Shared/_Account_Layout.cshtml";
+}
+
+<nav class="mt-3" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/Materials/Index">Личный кабинет</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Подробнее</li>
+    </ol>
+</nav>
+
+<main class="container">
+    <br />
+    <h2>Информация о материале</h2>
+    <hr />
+    <h5>Название публикации на русском языке</h5>
+    <p>@Html.DisplayFor(m => m.TitleRus)</p>
+    <h5>Название публикации на английском языке</h5>
+    <p>@Html.DisplayFor(m => m.TitleEng)</p>
+    <h5>Тип публикации</h5>
+    <p>@Html.DisplayFor(m => m.Type)</p>
+    <h5>Рубрика публикации</h5>
+    <p>@Html.DisplayFor(m => m.Rubric)</p>
+    <h5>Количество страниц</h5>
+    <p>@Html.DisplayFor(m => m.Pages)</p>
+    <h5>Аннотация на русском языке</h5>
+    <p>@Html.DisplayFor(m => m.AnnotationRus)</p>
+    <h5>Аннотация на английском языке</h5>
+    <p>@Html.DisplayFor(m => m.AnnotationEng)</p>
+    <h5>Ключевые слова через запятую на русском языке</h5>
+    <p>@Html.DisplayFor(m => m.KeywordsRus)</p>
+    <h5>Ключевые слова через запятую на английском языке</h5>
+    <p>@Html.DisplayFor(m => m.KeywordsEng)</p>
+    <br />
+
+    <div><h4>Авторы</h4></div>
+    @foreach (Author A in Model.Authors)
+    {
+        <hr />
+        <p><b>ФИО: </b>@A.Surname @A.Name @A.Patronymic</p>
+        <p><b>Место работы/учебы: </b>@A.Place</p>
+        <p><b>Должность/стутус: </b>@A.Position</p>
+        <p><b>E-mail: </b>@A.Email</p>
+    }
+
+    <br />
+    @{
+        if (File.Exists(Server.MapPath("~/Files/Articles/") + Model.Id + "/" + Model.FileName))
+        {
+            <div>
+                <label class="alert-success">Файл публикации "@Model.FileName"</label>
+                <a href="/Materials/GetFile/@Model.Id">Скачать</a>
+            </div>
+        }
+        else
+        {
+            <p class="alert-warning">Файл публикации не найден!</p>
+        }
+    }
+    <br />
+</main>
+

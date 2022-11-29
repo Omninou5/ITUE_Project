@@ -1,0 +1,26 @@
+﻿@model IEnumerable<ITUE.Models.Review>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Account_Layout.cshtml";
+}
+
+<h3 class="mt-4">Личный кабинет рецензента</h3>
+<hr />
+<main class="mt-4">
+    <ul type="circle">
+        <li class="mb-2">
+            <a class="text-white btn btn-primary" href="/Reviewer/ReviewArticles">Новые материалы на рецензирование   <span class="badge badge-light">@Model.Where(m => m.Result == "Review").Count()</span></a>
+        </li>
+        <li class="mb-2">
+            <a class="text-white btn btn-success" href="/Reviewer/SentReview">Отправленные рецензии</a>
+        </li>
+    </ul>
+
+    <hr />
+    <div class="mb-2">
+        <h5><a href="/Manage/ChangePassword">Изменить пароль</a></h5>
+    </div>
+
+
+</main>

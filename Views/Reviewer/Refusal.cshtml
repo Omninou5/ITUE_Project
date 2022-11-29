@@ -1,0 +1,48 @@
+﻿@model ITUE.Models.Review
+
+@{
+    ViewBag.Title = "ChangeStatus";
+    Layout = "~/Views/Shared/_Account_Layout.cshtml";
+}
+
+<br />
+<br />
+
+@switch (ViewBag.Status)
+{
+    case "Recommended": // Рекомендовать к публикации
+        <big><b>Рекомендовать к публикации данную статью ?</b></big>
+        break;
+    case "NotRecommended": // НЕ рекомендовать к публикации
+        <big><b>НЕ рекомендовать к публикации данную статью ?</b></big>
+        break;
+    case "ReviewerCorrection": //  Отправить на исправление
+        <big><b>Отправить данную статью автору на исправление ?</b></big>
+        break;
+    case "RefusalOfReview": // Отказаться от рецензирования
+        <big><b>Отказать в рецензировании данной статьи ?</b></big>
+        break;
+    default: // Other
+        <big><b>Выполнить Неизвестное действие ?</b></big>
+        break;
+}
+
+<div class="row no-gutters border rounded overflow-hidden flex-md-row my-4 shadow-sm h-md-250 position-relative">
+    <div class="col p-4 d-flex flex-column position-static">
+        <h5 class="mb-3">
+            @Html.DisplayFor(m => m.Material.TitleRus)
+        </h5>
+        <h6 class="mb-2 text-secondary">
+            @foreach (var author in Model.Material.Authors)
+            {
+                @(author.Surname + " ") @(author.Name[0] + ".") @(author.Patronymic[0] + ".") <br />
+            }
+        </h6>
+    </div>
+</div>
+
+@using (Html.BeginForm())
+{
+    <a class="btn btn-success" href="/Reviewer/Index">Отменить действие</a>
+    <input class="btn btn-danger" type="submit" value="Подтвердить действие" />
+}

@@ -1,0 +1,11 @@
+Статусы публикаций:
+Sent
+Correction
+Fixed
+Review
+NotRecommended
+Recommended
+RefusalOfReview
+Accepted
+Other
+ReviewerCorrection

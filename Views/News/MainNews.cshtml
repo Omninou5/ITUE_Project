@@ -1,0 +1,47 @@
+﻿@model IEnumerable<ITUE.Models.News>
+
+<div id="carouselExampleIndicators" class="carousel slide col-md-8 pt-2 imageNews" data-ride="carousel">
+    <div class="carousel-inner h-100">
+        @foreach (var item in Model.Take(1))
+        {
+            <div class="carousel-item active blockWbg h-100">
+                <div class="carousel-caption d-flex align-items-center h-100">
+                    <div>
+                        <a style="color: white" href="/News/MainNewsDetails/@item.Id">
+                            <h5 class="m-0 d-block text-center">
+                                @Html.DisplayFor(modelItem => item.TitleRus)
+                            </h5>
+                        </a>
+                        <p class="m-0 cut d-none d-lg-block">@Html.DisplayFor(modelItem => item.TextRus)</p>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @foreach (var item in Model.Skip(1))
+        {
+            <div class="carousel-item blockWbg h-100">
+                <div class="carousel-caption d-flex align-items-center h-100">
+                    <div>
+                        <a style="color: white" href="/News/MainNewsDetails/@item.Id">
+                            <h5 class="m-0 d-block text-center">
+                                @Html.DisplayFor(modelItem => item.TitleRus)
+                            </h5>
+                        </a>
+                        <p class="m-0 cut d-none d-lg-block">@Html.DisplayFor(modelItem => item.TextRus)</p>
+                    </div>
+                </div>
+            </div>
+        }
+
+
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Предыдущая</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Следующая</span>
+        </a>
+    </div>
+</div>

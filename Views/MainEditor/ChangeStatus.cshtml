@@ -1,0 +1,51 @@
+﻿@model ITUE.Models.Material
+
+@using ITUE.Models
+
+@{
+    ViewBag.Title = "ChangeStatus";
+    Layout = "~/Views/Shared/_Account_Layout.cshtml";
+}
+
+<br />
+<br />
+<big><b>Вы действительно хотите </b></big>
+
+@switch (ViewBag.Status)
+{
+    case "Accepted": // Принять статью к публикации
+        <big><b>принять данную статью к публикации ?</b></big>
+        break;
+    case "Correction": // Вернуть автору на исправление
+        <big><b>вернуть автору данную статью на исправление ?</b></big>
+        break;
+    case "Review": //  Отправить на рецензирование
+        <big><b>отправить статью на рецензирование ?</b></big>
+        break;
+    case "Rejected": // Отказать в публикации
+        <big><b>отказать в публикации данной статьи ?</b></big>
+        break;
+    default: // Other
+        <big><b>выполнить Неизвестное действие ?</b></big>
+        break;
+}
+
+<div class="row no-gutters border rounded overflow-hidden flex-md-row my-4 shadow-sm h-md-250 position-relative">
+    <div class="col-md-8 p-4 d-flex flex-column position-static">
+        <h5 class="mb-3">
+            @Html.DisplayFor(m => m.TitleRus)
+        </h5>
+        <h6 class="mb-2 text-secondary">
+            @foreach (Author author in Model.Authors)
+            {
+                @(author.Surname + " ") @(author.Name[0] + ".") @(author.Patronymic[0] + ".") <br />
+            }
+        </h6>
+    </div>
+</div>
+
+@using (Html.BeginForm())
+{
+    <a class="btn btn-danger" href="/MainEditor/SentMaterials">Отменить действие</a>
+    <input class="btn btn-success" type="submit" value="Применить" />
+}

@@ -1,0 +1,26 @@
+﻿@model ITUE.Models.News
+
+@{
+    ViewBag.Title = "Новость";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+<h4>Актуальная новость</h4>
+<div class="row no-gutters border rounded overflow-hidden flex-md-row my-4 shadow-sm h-md-250 position-relative">
+    <div class="col p-4 d-flex flex-column position-static">
+        <h5 class="mb-3">
+            @Html.DisplayFor(m => m.TitleRus)
+        </h5>
+        <p>
+            @Html.DisplayFor(m => m.TextRus)
+        </p>
+
+        <p class="text-muted">@Model.Date.Value.ToString("D")</p>
+    </div>
+</div>
+
+@using (Html.BeginForm())
+{
+    <a class="btn btn-success" href="/Home/Index/">На главную</a>
+}

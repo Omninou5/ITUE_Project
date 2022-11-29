@@ -1,0 +1,74 @@
+﻿@model IEnumerable<ITUE.Models.Material>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Account_Layout.cshtml";
+}
+
+<main class="container">
+    <br />
+    <h2>Личный кабинет автора</h2>
+    <hr />
+    <br />
+    <a class="btn btn-success" href="/Author/Create">Добавить новую публикацию</a>
+    <br />
+    <br />
+
+    <ul class="pl-3" type="circle">
+        <li class="mb-4">
+            <h5>
+                <a href="/Author/SentMaterials">Отправленные в редакцию материалы</a>
+                <span class="badge badge-light"> @Model.Where(m => m.Status == "Sent").Count() </span>
+            </h5>
+            <p>
+                Материалы находятся на рассмотрении редакцией.
+            </p>
+
+        </li>
+
+        <li class="mb-4">
+            <h5>
+                <a href="/Author/ReturnedMaterials">Возвращенные автору материалы</a>
+                <span class="badge badge-light"> @Model.Where(m => m.Status == "Correction" || m.Status == "ReviewerCorrection").Count() </span>
+            </h5>
+            <p>
+                Материалы возвращены автору для исправления ошибок оформления.
+            </p>
+        </li>
+
+        <li class="mb-4">
+            <h5>
+                <a href="/Author/AcceptedMaterials">Принятые к публикации материалы</a>
+                <span class="badge badge-light"> @Model.Where(m => m.Status == "Accepted").Count() </span>
+            </h5>
+            <p>
+                Материалы приняты для публикации в журнале.
+            </p>
+        </li>
+    </ul>
+
+    <hr />
+
+    <div class="mb-4">
+        <h5 class="text-uppercase">
+            <a href="/Author/RejectedMaterials">Отклоненные материалы</a>
+            <span class="badge badge-light"> @Model.Where(m => m.Status == "Rejected").Count() </span>
+        </h5>
+        <p>Материалы, публикация которых отклонена.</p>
+    </div>
+
+    <div class="mb-4">
+        <h5 class="text-uppercase">
+            <a href="/Author/PublishedMaterials">Опубликованные материалы</a>
+            <span class="badge badge-light"> @Model.Where(m => m.Status == "Published").Count() </span>
+        </h5>
+        <p>Материалы опубликованы в журнале (размещены на сайте).</p>
+    </div>
+
+    <br />
+    <hr />
+    <div class="mb-4">
+        <h4><a href="/Manage/ChangePassword">Изменить пароль</a></h4>
+        <br />
+    </div>
+</main>

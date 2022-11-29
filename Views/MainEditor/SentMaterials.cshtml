@@ -1,0 +1,179 @@
+﻿@model IEnumerable<ITUE.Models.Material>
+
+@{
+    ViewBag.Title = "Test";
+    Layout = "~/Views/Shared/_Account_Layout.cshtml";
+}
+
+<main>
+    <nav class="mt-3" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/MainEditor/Index">Личный кабинет</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Поступившие материалы</li>
+        </ol>
+    </nav>
+
+    @if (Model.Count() == 0)
+    {
+        <h4 class="my-5 text-center">Поступивших материалов нет</h4>
+        <a href="/MainEditor/Index" class="btn btn-info">Вернуться назад</a>
+    }
+    else
+    {
+        <br />
+        <h3>Поступившие материалы</h3>
+        <table class="table table-hover table-sm mt-4 shadow-sm rounded" width="100%">
+            <thead class="thead-light">
+                <tr>
+                    <th width="30%">Название публикации</th>
+                    <th width="15%">Авторы</th>
+                    <th width="5%">Тип публикации</th>
+                    <th width="10%">Рубрика публикации</th>
+                    <th width="10%">Дата</th>
+                    <th width="10%">Статус публикации</th>
+                    <th width="10%"></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TitleRus)
+                        </td>
+                        <td>
+                            @foreach (var A in item.Authors)
+                            {
+                                @(A.Surname + " ") @(A.Name[0] + ".") @(A.Patronymic[0] + ".") <br />
+                            }
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Type)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Rubric)
+                        </td>
+                        <td>
+                            <p>@item.DatePublication</p>
+                        </td>
+                        <td>
+                            @switch (item.Status)
+                            {
+                                case "Sent":
+                                    <span class="badge badge-primary w-100" title="Новый материал автора">Новая статья</span>
+                                    break;
+                                case "Correction":
+                                    <span class="badge badge-secondary w-100" title="Материал, находящийся на исправлении у автора">На исправлении</span>
+                                    break;
+                                case "Fixed":
+                                    <span class="badge btn-info w-100" title="Исправленный материал от автора">Исправленный <br /> материал</span>
+                                    break;
+                                case "Review":
+                                    <span class="badge badge-warning w-100" title="Материал, находящийся на рецензировании">На рецензировании</span>
+                                    break;
+                                case "ReviewerCorrection":
+                                    <span class="badge btn-secondary w-100" title="Материал отправлен на исправление к автору на основании рецензии">На исправлении</span>
+                                    break;
+                                case "NotRecommended":
+                                    <span class="badge badge-danger w-100" title="Материал не получил положительной оценки от рецензента">НЕ рекомендовано <br /> к публикации</span>
+                                    break;
+                                case "Recommended":
+                                    <span class="badge badge-success w-100" title="Материал получил положительную оценку от рецензента">Рекомендовано <br /> к публикации</span>
+                                    break;
+                                case "RefusalOfReview":
+                                    <span class="badge badge-dark w-100" title="Статья была отказана в рецензировании">Отказано в <br /> рецензировании</span>
+                                    break;
+                                default:
+                                    <span class="badge badge-light w-100">Неизвестный статус</span>
+                                    break;
+                            }
+                        </td>
+
+                        <td class="border-left">
+                            <div class="dropdown-menu-left">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Действия
+                                </button>
+                                <div class="dropdown-menu border-info shadow-lg" aria-labelledby="dropdownMenuButton">
+                                    <div class="m-2">
+                                        @switch (item.Status)
+                                        {
+                                            case "Sent": // Новая статья от Автора к Редактору
+                                                @Html.ActionLink("Принять статью к публикации", "ChangeStatus", new { id = item.Id, Status = "Accepted" }, null) <br />
+                                                @Html.ActionLink("Вернуть автору на исправление", "ChangeStatus", new { id = item.Id, Status = "Correction" }, null) <br />
+                                                @Html.ActionLink("Отправить на рецензирование", "SelectReviewer", new { id = item.Id, Status = "Review" }, null) <br />
+                                                <div class="dropdown-divider"></div>
+                                                @Html.ActionLink("Подробнее", "Details", new { id = item.Id }, null) <br />
+                                                @Html.ActionLink("Редактировать", "Edit", new { id = item.Id }, null)<br />
+                                                @Html.ActionLink("Отказать в публикации", "ChangeStatus", new { id = item.Id, Status = "Rejected" }, null)
+                                                break;
+
+                                            case "Correction": // Статья отправлена на исправление от Редактора к Автору
+                                                @Html.ActionLink("Подробнее", "Details", new { id = item.Id }, null) <br />
+                                                @Html.ActionLink("Отказать в публикации", "ChangeStatus", new { id = item.Id, Status = "Rejected" }, null)
+                                                break;
+
+                                            case "Fixed": // Исправленная статья от Автора к Редактору
+                                                @Html.ActionLink("Принять статью к публикации", "ChangeStatus", new { id = item.Id, Status = "Accepted" }, null) <br />
+                                                @Html.ActionLink("Повторно вернуть на исправление", "ChangeStatus", new { id = item.Id, Status = "Correction" }, null) <br />
+                                                @Html.ActionLink("Отправить на рецензирование", "SelectReviewer", new { id = item.Id, Status = "Review" }, null) <br />
+                                                <div class="dropdown-divider"></div>
+                                                @Html.ActionLink("Подробнее", "Details", new { id = item.Id }, null) <br />
+                                                @Html.ActionLink("Редактировать", "Edit", new { id = item.Id }, null)<br />
+                                                @Html.ActionLink("Отказать в публикации", "ChangeStatus", new { id = item.Id, Status = "Rejected" }, null)
+                                                break;
+
+                                            case "Review": // Статья отправлена на рецензирование от Редактора к Рецензенту
+                                                @Html.ActionLink("Подробнее", "Details", new { id = item.Id }, null) <br />
+                                                @Html.ActionLink("Отказать в публикации", "ChangeStatus", new { id = item.Id, Status = "Rejected" }, null)
+                                                break;
+
+                                            case "ReviewerCorrection": // Статья направлена на исправление от Рецензента к Автору
+                                                @Html.ActionLink("Подробнее", "Details", new { id = item.Id }, null) <br />
+                                                @Html.ActionLink("Отказать в публикации", "ChangeStatus", new { id = item.Id, Status = "Rejected" }, null)
+                                                break;
+
+                                            case "NotRecommended": // Статья НЕ рекомендована к публикации
+                                                @Html.ActionLink("Отправить на дополнительное рецензирование", "SelectReviewer", new { id = item.Id, Status = "Review" }, null) <br />
+                                                <div class="dropdown-divider"></div>
+                                                @Html.ActionLink("Подробнее", "Details", new { id = item.Id }, null) <br />
+                                                @Html.ActionLink("Редактировать", "Edit", new { id = item.Id }, null) <br />
+                                                @Html.ActionLink("Отказать в публикации", "ChangeStatus", new { id = item.Id, Status = "Rejected" }, null)
+                                                break;
+
+                                            case "Recommended": // Статья рекомендована к публикации
+                                                @Html.ActionLink("Принять статью к публикации", "ChangeStatus", new { id = item.Id, Status = "Accepted" }, null) <br />
+                                                @Html.ActionLink("Отправить на дополнительное рецензирование", "SelectReviewer", new { id = item.Id, Status = "Review" }, null) <br />
+                                                <div class="dropdown-divider"></div>
+                                                @Html.ActionLink("Подробнее", "Details", new { id = item.Id }, null) <br />
+                                                @Html.ActionLink("Редактировать", "Edit", new { id = item.Id }, null) <br />
+                                                @Html.ActionLink("Отказать в публикации", "ChangeStatus", new { id = item.Id, Status = "Rejected" }, null)
+                                                break;
+
+                                            case "RefusalOfReview": // Статья была отказана в рецензировании
+                                                @Html.ActionLink("Отправить на дополнительное рецензирование", "SelectReviewer", new { id = item.Id, Status = "Review" }, null) <br />
+                                                <div class="dropdown-divider"></div>
+                                                @Html.ActionLink("Подробнее", "Details", new { id = item.Id }, null) <br />
+                                                @Html.ActionLink("Редактировать", "Edit", new { id = item.Id }, null) <br />
+                                                @Html.ActionLink("Отказать в публикации", "ChangeStatus", new { id = item.Id, Status = "Rejected" }, null)
+                                                break;
+
+                                            default: // Other
+                                                @Html.ActionLink("Отказать в публикации", "ChangeStatus", new { id = item.Id, Status = "Rejected" }, null)
+                                                <div class="dropdown-divider"></div>
+                                                @Html.ActionLink("Подробнее", "Details", new { id = item.Id }, null) <br />
+                                                @Html.ActionLink("Редактировать", "Edit", new { id = item.Id }, null) <br />
+                                                @Html.ActionLink("Удалить", "Delete", new { id = item.Id }, null)
+                                                break;
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</main>

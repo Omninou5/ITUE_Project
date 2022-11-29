@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Account_Layout.cshtml";
+}
+
+<form method="post">
+    <br />
+    <h2>Вы уверены, что хотите удалить данный аккаунт?</h2>
+    <br />
+    <input class="btn btn-primary" type="submit" value="Удалить" />
+    @Html.ActionLink("Отмена", "Index", null, new { @class = "btn btn-danger" })
+</form>

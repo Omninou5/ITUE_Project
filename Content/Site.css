@@ -1,0 +1,58 @@
+﻿body {
+    padding-top: 0px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+.carousel-caption {
+    position: center;
+    right: 8%;
+    left: 8%;
+    bottom: 0px;
+    z-index: 0;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    color: #fff;
+    text-align: left;
+}
+
+.cut {
+    /*white-space: normal ; /* Отменяем перенос текста */
+    /*overflow: hidden;*/ /* Обрезаем содержимое */
+    /*padding: 5px;*/ /* Поля */
+    /*text-overflow: ellipsis;*/ /* Многоточие */
+
+    /*Для карусели новостей на гл странице*/
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+}
+
+.imageNews {
+    max-height:300px; 
+    min-height:150px;
+}
+
+/*Для блока новостей*/
+.blockWbg {
+    background-image: url(/Files/Site/imageNews/7.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 200px;
+    width: 100%;
+}

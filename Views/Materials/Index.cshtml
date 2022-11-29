@@ -1,0 +1,45 @@
+﻿@model IEnumerable<ITUE.Models.Material>
+
+@{
+    ViewBag.Title = "Главный редактор";
+    Layout = "~/Views/Shared/_Account_Layout.cshtml";
+}
+
+<main class="mt-4 ml-3">
+    <h3 class="mt-4">Личный кабинет технического редактора</h3>
+    <hr />
+
+    <div class="" style="width:400px">
+        <br />
+        <a class="btn btn-warning mb-3" style="width:350px" href="/Materials/SentMaterials">Все Поступившие Материалы <span class="badge badge-light">@Model.Where(m => m.Status != "Published" && m.Status != "Rejected" && m.Status != "Accepted").Count()</span> </a>
+        <br />
+        <a class="btn btn-primary mb-3" style="width:350px" href="/Materials/AcceptedMaterials">
+            <svg class="bi bi-bookmark-check" width="1.5em" height="1.5em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M4.5 2a.5.5 0 0 0-.5.5v11.066l4-2.667 4 2.667V8.5a.5.5 0 0 1 1 0v6.934l-5-3.333-5 3.333V2.5A1.5 1.5 0 0 1 4.5 1h4a.5.5 0 0 1 0 1h-4z" />
+                <path fill-rule="evenodd" d="M15.854 2.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 4.793l2.646-2.647a.5.5 0 0 1 .708 0z" />
+            </svg>
+            Принятые к публикации материалы
+            <span class="badge badge-light">@Model.Where(m => m.Status == "Accepted").Count()</span>
+        </a>
+        <ul type="circle">
+            <li class="mb-2">
+                <a href="/Materials/PublishedMaterials">Все опубликованные материалы</a>
+            </li>
+            <li class="mb-4">
+                <a href="/Materials/RejectedMaterials">Все отклоненные материалы</a>
+            </li>
+        </ul>
+        <hr />
+        <a class="btn btn-success mb-3" href="/Materials/Create">Добавить новую публикацию</a>
+    </div>
+
+    <ul class="nav flex-column">
+        <li class="mt-5">
+            <h5>
+                <a href="/Manage/ChangePassword">
+                    Изменить пароль
+                </a>
+            </h5>
+        </li>
+    </ul>
+</main>

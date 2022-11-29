@@ -1,0 +1,31 @@
+﻿@model ITUE.Models.Material
+
+@using ITUE.Models
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Account_Layout.cshtml";
+}
+
+<br />
+<br />
+<big><u>Вы действительно хотите удалить данную публикацию?</u></big>
+<div class="row no-gutters border rounded overflow-hidden flex-md-row my-4 shadow-sm h-md-250 position-relative">
+    <div class="col p-4 d-flex flex-column position-static">
+        <h5 class="mb-3">
+            @Html.DisplayFor(m => m.TitleRus)
+        </h5>
+        <h6 class="mb-2 text-secondary">
+            @foreach (Author author in Model.Authors)
+            {
+                @author.Surname @author.Name @author.Patronymic<br />
+            }
+        </h6>
+    </div>
+</div>
+
+@using (Html.BeginForm())
+{
+    <a class="btn btn-success" href="/MainEditor/Index/">Отменить</a>
+    <input class="btn btn-danger" type="submit" value="Удалить" />
+}

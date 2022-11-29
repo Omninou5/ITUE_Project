@@ -1,0 +1,41 @@
+﻿@using Microsoft.AspNet.Identity
+
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <ul class="flex-nowrap nav navbar-nav navbar-right">
+            <li>
+                @if (User.IsInRole("admin"))
+                {
+                    @Html.ActionLink(User.Identity.GetUserName(), "Index", "Admin", routeValues: null, htmlAttributes: new { @class = "text-light mr-2 btn btn-primary", title = "Manage" })
+                }
+                @if (User.IsInRole("user"))
+                {
+                    @Html.ActionLink(User.Identity.GetUserName(), "Index", "Author", routeValues: null, htmlAttributes: new { @class = "text-light mr-2 btn btn-primary", title = "Manage" })
+                }
+                @if (User.IsInRole("maineditor"))
+                {
+                    @Html.ActionLink(User.Identity.GetUserName(), "Index", "MainEditor", routeValues: null, htmlAttributes: new { @class = "text-light mr-2 btn btn-primary", title = "Manage" })
+                }
+                @if (User.IsInRole("technicaleditor"))
+                {
+                    @Html.ActionLink(User.Identity.GetUserName(), "Index", "Materials", routeValues: null, htmlAttributes: new { @class = "text-light mr-2 btn btn-primary", title = "Manage" })
+                }
+                @if (User.IsInRole("reviewer"))
+                {
+                    @Html.ActionLink(User.Identity.GetUserName(), "Index", "Reviewer", routeValues: null, htmlAttributes: new { @class = "text-light mr-2 btn btn-primary", title = "Manage" })
+                }
+            </li>
+            <li><a class="btn btn-light" href="javascript:document.getElementById('logoutForm').submit()">Выйти</a></li>
+        </ul>
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right ">
+        <li>@Html.ActionLink("Войти", "Login", "Account", routeValues: null, htmlAttributes: new { @class = "btn btn-light", id = "loginLink" })</li>
+    </ul>
+}

@@ -1,0 +1,23 @@
+﻿@model ITUE.Models.News
+
+@{
+    ViewBag.Title = "DeleteNews";
+    Layout = "~/Views/Shared/_Account_Layout.cshtml";
+}
+
+<br />
+<br />
+<big><u>Вы действительно хотите удалить данную новость?</u></big>
+<div class="row no-gutters border rounded overflow-hidden flex-md-row my-4 shadow-sm h-md-250 position-relative">
+    <div class="col p-4 d-flex flex-column position-static">
+        <h5 class="mb-3">
+            @Html.DisplayFor(m => m.TitleRus)
+        </h5>
+    </div>
+</div>
+
+@using (Html.BeginForm())
+{
+    <a class="btn btn-success" href="/News/Index/">Отменить удаление</a>
+    <input class="btn btn-danger" type="submit" value="Удалить" />
+}
